@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tasks',
+    'rest_framework',
+    'rest_framework_simplejwt', 
 ]
 
 MIDDLEWARE = [
@@ -76,10 +78,15 @@ WSGI_APPLICATION = 'mboka_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mboka_api',  
+        'USER': 'root',      
+        'PASSWORD': 'Githaiga001#',  
+        'HOST': 'localhost',           
+        'PORT': '3306',              
     }
 }
+
 
 
 # Password validation
@@ -121,4 +128,19 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+
+
+'EXCEPTION_HANDLER': ('tasks.utils.custom_exception_handler'),
+}
+
+AUTH_USER_MODEL = 'tasks.UserProfile'
+
